@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oferta - Asystent AI do Leadów</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .a4-container {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            max-width: 90px;
+            max-height: 90px;
+            width: auto;
+            height: auto;
+            z-index: 10;
+        }
+
+        .content {
+            padding: 60px 60px 40px;
+        }
+
+        .section {
+            margin-bottom: 45px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid;
+            border-image: linear-gradient(90deg, #00D9FF 0%, #7C3AED 50%, #EC4899 100%) 1;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, #00D9FF 0%, #7C3AED 100%);
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            padding: 15px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 15px;
+            color: #333;
+            line-height: 1.6;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 100%);
+        }
+
+        .calculator-wrapper {
+            background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 50%, #EC4899 100%);
+            border-radius: 16px;
+            padding: 2px;
+            margin: 30px 0;
+        }
+
+        .calculator {
+            background: white;
+            border-radius: 14px;
+            padding: 40px;
+        }
+
+        .calculator-item {
+            margin-bottom: 30px;
+        }
+
+        .calculator-item label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .calculator-item .description {
+            display: block;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .calculator-item .price-info {
+            display: block;
+            font-size: 13px;
+            color: #7C3AED;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .calculator-item .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .calculator-item input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .calculator-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator-item input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 100%);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .calculator-item .value-display {
+            min-width: 80px;
+            text-align: right;
+            font-size: 16px;
+            font-weight: 600;
+            color: #7C3AED;
+        }
+
+        .calculator-item .unit {
+            font-size: 13px;
+            color: #666;
+            margin-left: 5px;
+        }
+
+        .calculator-summary {
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(124, 58, 237, 0.05) 50%, rgba(236, 72, 153, 0.05) 100%);
+            border-radius: 12px;
+            border-left: 4px solid;
+            border-image: linear-gradient(180deg, #00D9FF 0%, #7C3AED 100%) 1;
+        }
+
+        .calculator-summary .total-price {
+            font-size: 42px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 50%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .calculator-summary .price-label {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calculator-summary .breakdown {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .calculator-summary .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .calculator-summary .breakdown-item .label {
+            color: #666;
+        }
+
+        .calculator-summary .breakdown-item .amount {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .text-content {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .placeholder {
+            color: #999;
+            font-style: italic;
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px dashed #ddd;
+        }
+
+        .footer {
+            padding: 30px 60px;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+            margin-top: auto;
+        }
+
+        .footer .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px 40px;
+            font-size: 13px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer .contact-item::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 100%);
+        }
+
+        .footer .contact-item a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer .contact-item a:hover {
+            color: #7C3AED;
+        }
+
+        .footer .calendly-link {
+            flex-basis: 100%;
+            width: 100%;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .footer .calendly-link a {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 50%, #EC4899 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .footer .calendly-link a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            position: relative;
+            padding-left: 35px;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #00D9FF 0%, #7C3AED 100%);
+            border-radius: 12px 0 0 12px;
+        }
+
+        .highlight-box strong {
+            color: #7C3AED;
+            font-weight: 600;
+        }
+
+        .visit-counter {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 100%);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            cursor: pointer;
+            transition: opacity 0.3s, transform 0.2s, box-shadow 0.2s;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .visit-counter.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .visit-counter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .logo {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .visit-counter .label {
+            font-size: 9px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+            margin-bottom: 2px;
+        }
+
+        .visit-counter .count {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .a4-container {
+                box-shadow: none;
+                margin: 0;
+            }
+            .visit-counter {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Licznik odwiedzin -->
+    <div class="visit-counter" id="visitCounter">
+        <div class="label">Odwiedzin</div>
+        <div class="count" id="visitCount">0</div>
+    </div>
+
+    <div class="a4-container">
+        <!-- Logo -->
+        <img src="logo1.png" alt="Logo" class="logo">
+        
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Opis usługi -->
+            <div class="section">
+                <h2 class="section-title">O Usłudze</h2>
+                <div class="text-content">
+                    Asystent VoiceLink to inteligentny asystent AI, który zamienia każdy lead w realną szansę sprzedażową. Reaguje natychmiast — dzwoni do nowych leadów w kilka sekund od ich pozyskania, zanim zdążą się rozmyślić lub wybrać konkurencję. Ożywia także zapomniane kontakty z Twojego CRM, które czekają na drugą szansę.
+                    <br><br>
+                    Asystent prowadzi naturalną, ludzką rozmowę: kwalifikuje potrzeby klienta, odpowiada na pytania dotyczące paneli fotowoltaicznych, pomp ciepła, finansowania i innych rozwiązań, a następnie umawia spotkanie z Twoim handlowcem w idealnym terminie.
+                    <br><br>
+                    Działa 24/7 — nigdy nie ma złego dnia, nigdy nie zapomina o follow-upach i zawsze oddzwania na czas. To jak zatrudnienie najlepszego telemarketera, który nie bierze urlopu, nie choruje i zawsze pracuje z pełnym zaangażowaniem.
+                    <br><br>
+                    Dzięki VoiceLink odzyskujesz utracone szanse sprzedaży, zwiększasz konwersję i odciążasz swój zespół handlowy, aby mógł skupić się na tym, co najważniejsze — finalizowaniu transakcji.
+                </div>
+            </div>
+
+            <!-- Funkcjonalności -->
+            <div class="section">
+                <h2 class="section-title">Kluczowe Funkcjonalności</h2>
+                <ul class="features-list">
+                    <li>Automatyczne dzwonienie do nowych leadów w ciągu kilku sekund od pozyskania</li>
+                    <li>Reaktywacja starych, nieobsłużonych leadów z CRM</li>
+                    <li>Inteligentna kwalifikacja klientów i ocena potencjału sprzedażowego</li>
+                    <li>Umawianie spotkań z handlowcami w kalendarzu</li>
+                    <li>Odpowiadanie na pytania o panele, pompy ciepła, dotacje i finansowanie</li>
+                    <li>Integracja z CRM, systemami rezerwacji i narzędziami marketingowymi</li>
+                    <li>Automatyczne przypomnienia i follow-upy</li>
+                    <li>Szczegółowe raporty i analityka skuteczności</li>
+                </ul>
+            </div>
+
+            <!-- Korzyści -->
+            <div class="section">
+                <h2 class="section-title">Korzyści</h2>
+                <div class="highlight-box">
+                    <div class="text-content">
+                        <strong>Zero utraconych leadów</strong> – każdy lead dostaje telefon w ciągu kilku sekund, gdy jego zainteresowanie jest największe. Badania pokazują, że szansa na kontakt spada o 50% już po pierwszej godzinie. Twój asystent AI dzwoni natychmiast. <strong>Drugie życie dla starych leadów</strong> – reaktywujesz setki zapomnianych kontaktów z CRM, które wcześniej uznawałeś za stracone. Wielu z nich po prostu czekało na odpowiedni moment lub przypomnienie. <strong>Zwiększenie konwersji o 30-50%</strong> dzięki natychmiastowemu kontaktowi i profesjonalnej obsłudze. <strong>Oszczędność czasu handlowców</strong> – oni skupiają się tylko na kwalifikowanych, umówionych spotkaniach, a nie na cold callingu. <strong>Działa 24/7</strong> – nie ma przerw, urlopów ani złych dni. Każdy lead dostaje szansę, niezależnie od pory dnia.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pakiet i cena -->
+            <div class="section">
+                <h2 class="section-title">Załóżenia i Konfiguracja</h2>
+                <div class="calculator-wrapper">
+                    <div class="calculator">
+                        <div class="calculator-item">
+                            <label>Baza starych leadów</label>
+                            <span class="description">liczba starych leadów w bazie do reaktywacji</span>
+                            <div class="slider-container">
+                                <input type="range" id="oldLeads" min="1000" max="100000" value="10000" step="1000">
+                                <span class="value-display"><span id="oldLeadsValue">10 000</span><span class="unit">leadów</span></span>
+                            </div>
+                        </div>
+
+                        <div class="calculator-item">
+                            <label>Nowe leady w miesiącu</label>
+                            <span class="description">liczba nowych leadów pozyskiwanych miesięcznie</span>
+                            <div class="slider-container">
+                                <input type="range" id="newLeads" min="100" max="10000" value="1000" step="50">
+                                <span class="value-display"><span id="newLeadsValue">1 000</span><span class="unit">leadów</span></span>
+                            </div>
+                        </div>
+
+
+                        <div class="calculator-summary">
+                            <div style="margin-bottom: 25px;">
+                                <div style="font-size: 14px; font-weight: 600; color: #7C3AED; margin-bottom: 10px; text-align: center;">Umówione spotkania (miesięcznie)</div>
+                                <div class="total-price" id="meetingsCount" style="font-size: 48px;">0</div>
+                            </div>
+                            <div class="breakdown">
+                                <div class="breakdown-item" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 2px solid #e0e0e0;">
+                                    <span class="label" style="font-weight: 600; color: #1a1a1a; font-size: 15px;">Szacunki (konwersja 7%):</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Spotkania ze starymi leadami (7% z <span id="breakdownOldLeads">0</span>)</span>
+                                    <span class="amount" id="breakdownOldContacts">0</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Spotkania z nowymi leadami (7% z <span id="breakdownNewLeads">0</span>)</span>
+                                    <span class="amount" id="breakdownNewContacts">0</span>
+                                </div>
+                                <div class="breakdown-item" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                                    <span class="label" style="font-weight: 600; color: #1a1a1a; font-size: 15px;">Wyniki:</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Umówione spotkania</span>
+                                    <span class="amount" id="breakdownMeetings">0</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Podpisane umowy (20% ze spotkań)</span>
+                                    <span class="amount" id="breakdownDeals">0</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Wartość umów (<span id="breakdownDealsCount">0</span> × 15 000 zł)</span>
+                                    <span class="amount" id="breakdownRevenue" style="color: #10b981; font-weight: 700;">0 zł</span>
+                                </div>
+                                <div class="breakdown-item" style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #e0e0e0;">
+                                    <span class="label" style="font-weight: 600; color: #1a1a1a; font-size: 15px;">Setup (utrzymanie miesięczne):</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Minuty rozmów (<span id="breakdownMinutesCount">0</span> spotkań × 1,5 min × 0,70 zł)</span>
+                                    <span class="amount" id="breakdownMinutesCost">0 zł</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">SMS z potwierdzeniem (<span id="breakdownSmsCount">0</span> × 0,20 zł)</span>
+                                    <span class="amount" id="breakdownSmsCost">0 zł</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label" style="font-weight: 600;">Razem utrzymanie</span>
+                                    <span class="amount" id="breakdownMaintenanceTotal" style="font-weight: 600;">0 zł</span>
+                                </div>
+                                <div class="breakdown-item" style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #e0e0e0;">
+                                    <span class="label" style="font-weight: 600; color: #1a1a1a; font-size: 15px;">Koszty i ROI:</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label">Cena agenta (<span id="breakdownMeetingsForPrice">0</span> spotkań × 60 zł)</span>
+                                    <span class="amount" id="breakdownAgentCost" style="color: #ef4444; font-weight: 700;">0 zł</span>
+                                </div>
+                                <div class="breakdown-item">
+                                    <span class="label" style="font-weight: 600;">Razem (cena agenta + utrzymanie)</span>
+                                    <span class="amount" id="breakdownTotalCost" style="color: #ef4444; font-weight: 700; font-size: 16px;">0 zł</span>
+                                </div>
+                                <div class="breakdown-item" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #e0e0e0;">
+                                    <span class="label" style="font-weight: 700; color: #1a1a1a; font-size: 16px;">ROI (zysk - koszt agenta - utrzymanie)</span>
+                                    <span class="amount" id="breakdownROI" style="color: #10b981; font-weight: 700; font-size: 18px;">0 zł</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; font-size: 12px; color: #999; text-align: center; font-style: italic;">
+                            Kalkulacja oparta na założeniach: konwersja 7% bezpośrednio na spotkania, 20% spotkań kończy się umową (co 5 spotkanie). Wartość umowy: 15 000 zł. Cena agenta: 60 zł za umówione spotkanie.
+                            <br><br>
+                            <strong style="color: #ef4444; font-style: normal;">Uwaga:</strong> <span style="color: #ef4444;">Cena agenta jest wyliczona dla przypadku, gdy agent odezwie się do 100% leadów. W rzeczywistości w ciągu miesiąca agent nie skontaktuje się z całą bazą jednorazowo, lecz będzie systematycznie kontaktował się z leadami w miarę ich pozyskiwania i reaktywacji, co oznacza, że rzeczywiste koszty mogą być niższe w początkowych miesiącach.</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://calendly.com/karol-kulis-voicelink/30min" target="_blank" style="display: inline-block; padding: 15px 30px; background: linear-gradient(135deg, #00D9FF 0%, #7C3AED 50%, #EC4899 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; transition: transform 0.2s, box-shadow 0.2s;">Umów spotkanie</a>
+                </div>
+            </div>
+
+            <!-- Warunki i terminy -->
+            <div class="section">
+                <h2 class="section-title">Warunki Realizacji</h2>
+                <div class="text-content">
+                    <strong>Wdrożenie w ciągu 2 tygodni</strong> – od podpisania umowy do pełnej gotowości asystenta. Przed startem przeprowadzamy szczegółową konsultację, podczas której omawiamy Twoje procesy sprzedażowe, strukturę leadów, preferencje komunikacji i cele biznesowe. Konfigurujemy asystenta pod Twoją branżę – panele fotowoltaiczne, pompy ciepła, dotacje, finansowanie. Integrujemy z Twoim CRM, kalendarzem i narzędziami marketingowymi. Ustalamy scenariusze rozmów, odpowiedzi na najczęstsze pytania i proces kwalifikacji leadów. <strong>Testujemy na próbnych leadach</strong> przed pełnym uruchomieniem, aby upewnić się, że wszystko działa idealnie.
+                </div>
+            </div>
+
+            <!-- Dodatkowe informacje -->
+            <div class="section">
+                <h2 class="section-title">Dodatkowe Informacje</h2>
+                <div class="text-content">
+                    <strong>Dedykowane wsparcie techniczne</strong> – nasz zespół jest dostępny, aby szybko reagować na wszelkie pytania i zapewnić ciągłość działania. <strong>Personalizowany panel administracyjny</strong> – śledź na bieżąco liczbę skontaktowanych leadów, wskaźniki konwersji, umówione spotkania, reaktywowane kontakty i wiele innych metryk. Widzisz dokładnie, ile leadów zostało przekwalifikowanych, ile spotkań umówionych i jaki jest ROI Twojej inwestycji. Panel pokazuje również nagrania rozmów, abyś mógł analizować jakość prowadzonych konwersacji i optymalizować procesy.
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="contact-info">
+                <div class="contact-item">karol.kulis@voicelink.pl</div>
+                <div class="contact-item">+48 603 076 043</div>
+                <div class="contact-item">87-148 Łysomice ul. Bukowa 21</div>
+                <div class="contact-item"><a href="https://www.voicelink.pl" target="_blank">voicelink.pl</a></div>
+                <div class="calendly-link">
+                    <a href="https://calendly.com/karol-kulis-voicelink/30min" target="_blank">Umów spotkanie</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Stałe
+        const CONVERSION_RATE = 0.07; // 7% konwersja na spotkanie
+        const DEAL_RATE = 0.2; // 20% spotkań kończy się umową (co 5 spotkanie)
+        const DEAL_VALUE = 15000; // wartość jednej umowy
+        const PRICE_PER_MEETING = 60; // cena za umówione spotkanie
+        const MINUTES_PER_LEAD = 1.5; // minuty rozmowy na jeden lead
+        const PRICE_PER_MINUTE = 0.70; // cena za minutę rozmowy
+        const PRICE_PER_SMS = 0.20; // cena za jeden SMS
+
+        // Elementy formularza
+        const oldLeadsSlider = document.getElementById('oldLeads');
+        const newLeadsSlider = document.getElementById('newLeads');
+
+        // Elementy wyświetlania wartości
+        const oldLeadsValue = document.getElementById('oldLeadsValue');
+        const newLeadsValue = document.getElementById('newLeadsValue');
+
+        // Elementy podsumowania
+        const meetingsCount = document.getElementById('meetingsCount');
+        const breakdownOldLeads = document.getElementById('breakdownOldLeads');
+        const breakdownNewLeads = document.getElementById('breakdownNewLeads');
+        const breakdownOldContacts = document.getElementById('breakdownOldContacts');
+        const breakdownNewContacts = document.getElementById('breakdownNewContacts');
+        const breakdownMeetings = document.getElementById('breakdownMeetings');
+        const breakdownDeals = document.getElementById('breakdownDeals');
+        const breakdownDealsCount = document.getElementById('breakdownDealsCount');
+        const breakdownRevenue = document.getElementById('breakdownRevenue');
+        const breakdownMeetingsForPrice = document.getElementById('breakdownMeetingsForPrice');
+        const breakdownAgentCost = document.getElementById('breakdownAgentCost');
+        const breakdownROI = document.getElementById('breakdownROI');
+        const breakdownMinutesCount = document.getElementById('breakdownMinutesCount');
+        const breakdownMinutesCost = document.getElementById('breakdownMinutesCost');
+        const breakdownSmsCount = document.getElementById('breakdownSmsCount');
+        const breakdownSmsCost = document.getElementById('breakdownSmsCost');
+        const breakdownMaintenanceTotal = document.getElementById('breakdownMaintenanceTotal');
+        const breakdownTotalCost = document.getElementById('breakdownTotalCost');
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        }
+
+        function calculatePrice() {
+            const oldLeads = parseInt(oldLeadsSlider.value);
+            const newLeads = parseInt(newLeadsSlider.value);
+
+            // Aktualizuj wyświetlane wartości suwaków
+            oldLeadsValue.textContent = formatNumber(oldLeads);
+            newLeadsValue.textContent = formatNumber(newLeads);
+
+            // Kalkulacja umówionych spotkań (7% konwersja bezpośrednio na spotkania)
+            const oldMeetings = Math.round(oldLeads * CONVERSION_RATE);
+            const newMeetings = Math.round(newLeads * CONVERSION_RATE);
+            const meetings = oldMeetings + newMeetings;
+
+            // Kalkulacja podpisanych umów (20% spotkań = co 5 spotkanie)
+            const deals = Math.round(meetings * DEAL_RATE);
+
+            // Kalkulacja wartości umów
+            const revenue = deals * DEAL_VALUE;
+
+            // Kalkulacja kosztu agenta
+            const agentCost = meetings * PRICE_PER_MEETING;
+
+            // Kalkulacja kosztów utrzymania (minuty + SMS)
+            const totalMinutes = meetings * MINUTES_PER_LEAD;
+            const minutesCost = totalMinutes * PRICE_PER_MINUTE;
+            const smsCost = meetings * PRICE_PER_SMS;
+            const maintenanceTotal = minutesCost + smsCost;
+
+            // Całkowity koszt (agent + utrzymanie)
+            const totalCost = agentCost + maintenanceTotal;
+
+            // Kalkulacja ROI (zysk - koszt agenta - utrzymanie)
+            const roi = revenue - totalCost;
+
+            // Aktualizuj podsumowanie
+            meetingsCount.textContent = formatNumber(meetings);
+            
+            breakdownOldLeads.textContent = formatNumber(oldLeads);
+            breakdownNewLeads.textContent = formatNumber(newLeads);
+            
+            breakdownOldContacts.textContent = formatNumber(oldMeetings);
+            breakdownNewContacts.textContent = formatNumber(newMeetings);
+            
+            breakdownMeetings.textContent = formatNumber(meetings);
+            breakdownDeals.textContent = formatNumber(deals);
+            breakdownDealsCount.textContent = formatNumber(deals);
+            breakdownRevenue.textContent = formatNumber(revenue) + ' zł';
+            
+            // Setup (utrzymanie)
+            breakdownMinutesCount.textContent = formatNumber(meetings);
+            breakdownMinutesCost.textContent = minutesCost.toFixed(2).replace('.', ',') + ' zł';
+            breakdownSmsCount.textContent = formatNumber(meetings);
+            breakdownSmsCost.textContent = smsCost.toFixed(2).replace('.', ',') + ' zł';
+            breakdownMaintenanceTotal.textContent = maintenanceTotal.toFixed(2).replace('.', ',') + ' zł';
+            
+            // Koszty i ROI
+            breakdownMeetingsForPrice.textContent = formatNumber(meetings);
+            breakdownAgentCost.textContent = formatNumber(agentCost) + ' zł';
+            breakdownTotalCost.textContent = formatNumber(Math.round(totalCost)) + ' zł';
+            breakdownROI.textContent = formatNumber(roi) + ' zł';
+        }
+
+        // Dodaj event listenery do wszystkich suwaków
+        oldLeadsSlider.addEventListener('input', calculatePrice);
+        newLeadsSlider.addEventListener('input', calculatePrice);
+
+        // Oblicz początkową cenę
+        calculatePrice();
+
+        // Licznik odwiedzin (ukryty domyślnie, widoczny po kliknięciu w logo)
+        (function() {
+            const visitCounter = document.getElementById('visitCounter');
+            const visitCountElement = document.getElementById('visitCount');
+            const logo = document.querySelector('.logo');
+            const VISIT_STORAGE_KEY = 'voicelink_offer_visited';
+            const API_ENDPOINT = 'https://api.voicelink.pl/track-visit'; // Zmień na właściwy endpoint lub zostaw puste dla localStorage
+            
+            let isCounterVisible = false;
+            
+            // Funkcja do pokazania/ukrycia licznika
+            function toggleCounter() {
+                isCounterVisible = !isCounterVisible;
+                if (isCounterVisible) {
+                    visitCounter.classList.add('visible');
+                    updateVisitCount();
+                } else {
+                    visitCounter.classList.remove('visible');
+                }
+            }
+            
+            // Obsługa kliknięcia w logo
+            if (logo) {
+                logo.addEventListener('click', toggleCounter);
+            }
+            
+            // Funkcja do formatowania liczby odwiedzin
+            function formatVisitCount(count) {
+                if (count >= 1000) {
+                    return (count / 1000).toFixed(1) + 'k';
+                }
+                return count.toString();
+            }
+            
+            // Funkcja do rejestracji wizyty
+            async function registerVisit() {
+                const hasVisited = sessionStorage.getItem(VISIT_STORAGE_KEY);
+                if (hasVisited) {
+                    return; // Już zarejestrowano w tej sesji
+                }
+                
+                try {
+                    if (API_ENDPOINT && API_ENDPOINT !== 'https://api.voicelink.pl/track-visit') {
+                        // Wyślij request do API
+                        await fetch(API_ENDPOINT, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                timestamp: new Date().toISOString(),
+                                page: 'offer',
+                                referrer: document.referrer || 'direct'
+                            })
+                        });
+                    }
+                } catch (error) {
+                    console.log('Nie można wysłać danych do API');
+                }
+                
+                // Zawsze aktualizuj localStorage
+                let count = parseInt(localStorage.getItem('voicelink_offer_visit_count') || '0');
+                count++;
+                localStorage.setItem('voicelink_offer_visit_count', count.toString());
+                sessionStorage.setItem(VISIT_STORAGE_KEY, 'true');
+            }
+            
+            // Funkcja do aktualizacji wyświetlanej liczby odwiedzin
+            async function updateVisitCount() {
+                try {
+                    if (API_ENDPOINT && API_ENDPOINT !== 'https://api.voicelink.pl/track-visit') {
+                        // Spróbuj pobrać z API
+                        const response = await fetch(API_ENDPOINT.replace('/track-visit', '/get-visits'));
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.totalVisits !== undefined) {
+                                visitCountElement.textContent = formatVisitCount(data.totalVisits);
+                                return;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.log('Nie można pobrać liczby odwiedzin z API');
+                }
+                
+                // Fallback: użyj localStorage
+                const count = parseInt(localStorage.getItem('voicelink_offer_visit_count') || '0');
+                visitCountElement.textContent = formatVisitCount(count);
+            }
+            
+            // Zarejestruj wizytę przy pierwszym otwarciu
+            registerVisit();
+        })();
+    </script>
+</body>
+</html>
+
